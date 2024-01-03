@@ -24,11 +24,36 @@ describe('statusReducer', () => {
   });
   
   describe('goToPage', () => {
-    
     it ('should update the page state', () => {
       const nextPage = 'HOME';
       const newState = subject(state, goToPage(nextPage));
       expect(newState.page).toEqual(nextPage);
+    });
+
+    it ('should not update state for invalid payload', () => {
+      const invalidPage = 777;
+      const newState = subject(state, goToPage(invalidPage));
+      // state should remain unchanged
+      expect(newState.page).toEqual('LANDING_PAGE');
+    });
+  });
+
+  describe('userLogin', () => {
+    it ('should update the user state on login', () => {
+      const user = 'eunice';
+      const newState = subject(state, userLogin(user));
+      expect(newState.user).toEqual(user);
+    });
+  });
+
+  describe('userLogout', () => {
+    it ('should clear the user state on logout', () => {
+      // first log the user in
+      state = subject(state, userLogin({ user: 'eunice' }));
+
+      // log out the user
+      const newState = subject(state, userLogout());
+      expect(newState.user).toBeNull();
     })
   })
 });
