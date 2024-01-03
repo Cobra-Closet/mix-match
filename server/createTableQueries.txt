@@ -60,3 +60,12 @@ CREATE TABLE outfits (
     (overall_id IS NOT NULL AND top_id IS NULL AND bottom_id IS NULL)
   )
 );
+
+CREATE TABLE sessions (
+  session_id SERIAL PRIMARY KEY,
+  user_id int NOT NULL,
+  session_token varchar(255) UNIQUE NOT NULL,
+  created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP, // timestamp when the session was created
+  expires_at timestamp with time zone NOT NULL, // timestamp of when the session is expected to expire
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);

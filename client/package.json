@@ -4,7 +4,7 @@
   "description": "",
   "main": "/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "start": "react-scripts start",
     "build": "cross-env NODE_ENV=production webpack"
   },
@@ -12,7 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.14.0",
     "@reduxjs/toolkit": "^2.0.1",
+    "axios": "^1.6.3",
+    "cloudinary": "^1.41.1",
     "dotenv": "^16.3.1",
     "fs": "^0.0.1-security",
     "json-loader": "^0.5.7",
