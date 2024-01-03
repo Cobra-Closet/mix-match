@@ -11,7 +11,10 @@ export const statusSlice = createSlice({
   initialState,
   reducers: {
     goToPage: (state, action) => {
-      state.page = action.payload;
+      // added conditional to make test for 'should not update for invalid payload' pass
+      if (typeof action.payload === 'string' && action.payload !== '') {
+        state.page = action.payload;
+      } else state.page = 'LANDING_PAGE';
     },
     userLogin: (state, action) => {
       state.user = action.payload;
