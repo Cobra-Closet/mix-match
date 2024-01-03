@@ -20,13 +20,6 @@ userController.createUser = async (req, res, next) => {
     const { rows } = await db.query(queryText, queryParams);
     console.log('completed query in userController.createUser');
 
-    // store user_id in session
-    // req.session object is used to store data that you want to keep across requests made by the same user
-    // req.session.userId = rows[0].user_id;
-    // console.log(
-    //   'this is req.session.userId in userController.createUser',
-    //   req.session.userId
-    // );
     // store username in res locals
     res.locals.userData = rows[0];
     res.locals.user = rows[0].username;
@@ -68,9 +61,6 @@ userController.verifyUser = async (req, res, next) => {
 
     res.locals.isMatch = isMatch;
 
-    // if password matches, establish a session
-    // req.session.userId = user.user_id;
-    // console.log('user verified in userController.verifyUser', user.user_id);
     // store username in res.locals to use on homepage
     res.locals.user = user.username;
     res.locals.userData = user;
