@@ -70,28 +70,6 @@ export default function LogInSignUpBox() {
         }
       }
     }
-
-    // try {
-    //   const response = await fetch('/api/login', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ username, password })
-    //   });
-
-    //   const data = await.response.json();
-
-    //   if (response.ok) {
-    //     // handle successful login
-    //     setMessage('Login successful');
-    //     dispatch(userLogin(data.user)); // dispatch user data
-    //     setTimeout(() => dispatch(goToPage('HOME')), 1000);
-    //   } else {
-    //     setMessage(data.message || 'An error occured during login');
-    //   }
-    // } catch(err) {
-    //   setMessage('Network error, please try again');
-    //   console.error('Login error', err);
-    // }
   };
 
   const toggleForm = () => {
