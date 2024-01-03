@@ -1,4 +1,4 @@
-import subject from '../src/utils/reducers/statusSlice';
+import subject, { goToPage, userLogin, userLogout } from '../src/utils/reducers/statusSlice';
 
 describe('statusReducer', () => {
     let state;
@@ -15,4 +15,20 @@ describe('statusReducer', () => {
           expect(subject(undefined, { type: undefined })).toEqual(state);
         });
       });
+
+    describe('unrecognized action types', () => {
+     it('should return the original without any duplication', () => {
+      const action = { type: '999' };
+      expect(subject(state, action)).toBe(state);
+    });
+  });
+  
+  describe('goToPage', () => {
+    
+    it ('should update the page state', () => {
+      const nextPage = 'HOME';
+      const newState = subject(state, goToPage(nextPage));
+      expect(newState.page).toEqual(nextPage);
+    })
+  })
 });
