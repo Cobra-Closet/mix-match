@@ -34,7 +34,7 @@
     "supertest": "^6.3.3"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
     "sql": "^0.78.0",
     "uuid": "^9.0.1"
   }

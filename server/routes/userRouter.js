@@ -4,7 +4,7 @@ const router = express.Router();
 const userController = require('../controllers/userController.js');
 const cookieController = require('../controllers/cookieController.js');
 const sessionController = require('../controllers/sessionController.js');
-const wobbedrobeController = require('../controllers/wobbedrobeController.js');
+const wobbedrobeController = require('../controllers/WobbedrobeController.js');
 const ootdController = require('../controllers/ootdController.js');
 
 router.post(
@@ -19,10 +19,12 @@ router.post(
   ootdController.getOutfitsForUser,
   (req, res) => {
     console.log('POST /user/login route hit');
-    const { user_id, username } = res.locals.userData;
+    console.log('res.locals.userData', res.locals.userData);
+    // const { user_id, username } = res.locals.userData;
     res.status(200).json({
-      user_id,
-      username,
+      success: true,
+      user_id: res.locals.userData.user_id, 
+      username: res.locals.userData.username,
       wardrobe: {
         top: res.locals.tops,
         bottom: res.locals.bottoms,

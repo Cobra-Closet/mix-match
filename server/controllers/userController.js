@@ -64,6 +64,7 @@ userController.verifyUser = async (req, res, next) => {
     // store username in res.locals to use on homepage
     res.locals.user = user.username;
     res.locals.userData = user;
+    console.log('res.locals.userData', res.locals.userData);
 
     // go to the next middleware which would be to establish a session
     return next();

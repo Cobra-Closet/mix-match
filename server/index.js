@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const Controller = require('./controllers/wobbedrobeController.js');
+const Controller = require('./controllers/WobbedrobeController.js');
 const userController = require('./controllers/userController.js');
 const cookieController = require('./controllers/cookieController.js');
 const sessionController = require('./controllers/sessionController.js');
@@ -9,11 +9,13 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 const db = require('./models/db.js');
 const sessionCleanupController = require('./controllers/sessionCleanupController.js');
+const multer = require('multer'); // Use multer for handling multipart/form-data
 
 require('dotenv').config();
 
 const app = express();
 const PORT = 8080;
+// const PORT = 3000;
 
 const userRouter = require('./routes/userRouter.js');
 const ootdRouter = require('./routes/ootdRouter.js');
