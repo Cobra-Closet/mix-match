@@ -6,25 +6,10 @@ const upload = multer({ dest: 'uploads/' });
 const wobbedrobeController = require("../controllers/WobbedrobeController.js");
 const ootdController = require("../controllers/ootdController.js");
 
-// //upload clothes
-// const multer = require('multer'); // Use multer for handling multipart/form-data
-// const cloudinary = require("../helpers/cloudinaryConfig");
-
-// const upload = multer({ dest: 'uploads/' }); // Temporary storage
-
-//img upload endpoint
-// router.post("/upload", upload.single("image"), async (req, res) => {
-//   try {
-//     const result = await cloudinary.uploader.upload(req.file.path);
-//     res.json({ imageUrl: result.secure_url });
-//   } catch (error) {
-//     res.status(500).send("Error uploading to Cloudinary");
-//   }
-// });
-
 router.post("/add/:itemType", upload.single("image"), wobbedrobeController.addItem, (req, res) => {
   console.log("POST /wobbedrobe/add/:itemType route hit");
   const itemType = req.params.itemType;
+  // will need to adjust this. we have imageUrl to make sure cloudify works
   const response = {
     itemType: res.locals[itemType],
     imageUrl: res.locals.imageUrl,
