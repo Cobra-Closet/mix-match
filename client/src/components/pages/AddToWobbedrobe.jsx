@@ -23,6 +23,7 @@ export default function AddToWobbeDrobe() {
     color: "",
     style: "",
     material: "",
+    image: null
   });
 
   const [selection, setSelection] = useState(null);
@@ -42,9 +43,9 @@ export default function AddToWobbeDrobe() {
 
     // check for user id
     if (user && user.user_id) {
-      console.log('if conditional passed', user.user_id);
+      console.log('if conditional passed in AddToWobbedrobe for user && user.user_id', user.user_id);
       // append to completeFormData
-      completeFormData.append("user_id", user_id);
+      completeFormData.append("user_id", user.user_id);
     } else {
       console.error('User ID is missing');
       return;
@@ -52,6 +53,7 @@ export default function AddToWobbeDrobe() {
 
     // check if image was provided, add it to completedFormData
     if (image) completeFormData.append("image", image);
+    console.log('this is image', image);
     // formData.append("image", image);
     // const completeFormData = new FormData();
 
@@ -151,8 +153,27 @@ export default function AddToWobbeDrobe() {
                   ))}
                 </select>
               </div>
-              {/* will need image upload input here */}
+              {/* HIDDEN Image upload input && Hidden Button for Custom Button */}
               <div>
+                <input
+                  type="file"
+                  className="visually-hidden-input"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  ref={fileInputRef}
+                />
+                {/* Custom File Upload Button */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    fileInputRef.current && fileInputRef.current.click()
+                  }
+                  className="custom-img-button"
+                >
+                  Upload Image
+                </button>
+              </div>
+              {/* will need image upload input here */}
+              {/* <div>
                 <label>Upload Image</label>
                 <input
                   type="file"
@@ -160,7 +181,7 @@ export default function AddToWobbeDrobe() {
                   onChange={(e) => setImage(e.target.files[0])}
                   ref={fileInputRef}
                 />
-              </div>
+              </div> */}
             </div>
           )}
 
@@ -179,15 +200,15 @@ export default function AddToWobbeDrobe() {
           )}
 
           {/* HIDDEN Image upload input && Hidden Button for Custom Button */}
-          <div>
+          {/* <div>
             <input
               type="file"
               className="visually-hidden-input"
               onChange={(e) => setImage(e.target.files[0])}
               ref={fileInputRef}
-            />
+            /> */}
             {/* Custom File Upload Button */}
-            <button
+            {/* <button
               type="button"
               onClick={() =>
                 fileInputRef.current && fileInputRef.current.click()
@@ -196,15 +217,15 @@ export default function AddToWobbeDrobe() {
             >
               Upload Image
             </button>
-          </div>
+          </div> */}
           {/* <input type="submit" value="Upload"  /> */}
-          <input type="submit" value="Submit" />
+          {/* <input type="submit" value="Submit" /> */}
           {selection && <input type="submit" value="Submit" />}
         </form>
       </div>
     );
 }
-{
+// {
   /* <form
                 onSubmit={async (e) => {
                   e.preventDefault();
@@ -273,4 +294,4 @@ export default function AddToWobbeDrobe() {
       </div>
     );
 } */
-}
+// }

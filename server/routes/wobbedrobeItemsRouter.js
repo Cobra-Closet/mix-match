@@ -22,7 +22,7 @@ const ootdController = require("../controllers/ootdController.js");
 //   }
 // });
 
-router.post("/add/:itemType", wobbedrobeController.addItem, (req, res) => {
+router.post("/add/:itemType", upload.single("image"), wobbedrobeController.addItem, (req, res) => {
   console.log("POST /wobbedrobe/add/:itemType route hit");
   const itemType = req.params.itemType;
   const response = {

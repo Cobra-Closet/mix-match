@@ -32,18 +32,24 @@ wobbedrobeController.addItem = async (req, res, next) => {
   const { user_id, category, color, style, material } = req.body;
   console.log("this is user_id", user_id);
 
-  let parsedUser_id;
-  if (typeof user_id !== "number") {
-    console.log("user_id is not a number", user_id);
-    parsedUser_id = parseInt(user_id, 10);
+    let parsedUser_id = parseInt(user_id, 10);
     if (isNaN(parsedUser_id)) {
-      console.log("parsedUser_id is not a number");
-      return res.status(400).send("Invalid user_id");
-    } else {
-      parsedUser_id = user_id;
-      console.log("this is parsedUser_id", parsedUser_id);
+      console.log("Invalid user_id:", user_id);
+      return res.status(400).json({ error: "Invalid user_id" });
     }
-  }
+     console.log("Parsed user_id:", parsedUser_id);
+  // let parsedUser_id;
+  // if (typeof user_id !== "number") {
+  //   console.log("user_id is not a number", user_id);
+  //   parsedUser_id = parseInt(user_id, 10);
+  //   if (isNaN(parsedUser_id)) {
+  //     console.log("parsedUser_id is not a number");
+  //     return res.status(400).send("Invalid user_id");
+  //   } else {
+  //     parsedUser_id = user_id;
+  //     console.log("this is parsedUser_id", parsedUser_id);
+  //   }
+  // }
 
   let imageUrl = null;
   // check if user submitted a photo to upload
@@ -64,13 +70,17 @@ wobbedrobeController.addItem = async (req, res, next) => {
     }
   }
   // need to set up column in each table for an image url then write additional query text to include url in the database
-  const queryText =
-    `INSERT INTO ${itemType}` +
-    "(user_id, category, color, style" +
-    (itemType === "shoes" ? "" : ", material") +
-    ") VALUES($1, $2, $3, $4" +
-    (itemType === "shoes" ? "" : ", $5") +
-    ") RETURNING *;";
+ const queryText = `INSERT INTO ${itemType} (user_id, category, color, style${
+   itemType === "shoes" ? "" : ", material"
+ }) VALUES($1, $2, $3, $4${itemType === "shoes" ? "" : ", $5"}) RETURNING *;`;
+ 
+  // const queryText =
+  //   `INSERT INTO ${itemType}` +
+  //   "(user_id, category, color, style" +
+  //   (itemType === "shoes" ? "" : ", material") +
+  //   ") VALUES($1, $2, $3, $4" +
+  //   (itemType === "shoes" ? "" : ", $5") +
+  //   ") RETURNING *;";
 
   // const values = [user_id, category, color, style];
   const values = [parsedUser_id, category, color, style];
