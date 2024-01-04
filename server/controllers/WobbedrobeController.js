@@ -7,7 +7,6 @@ const upload = multer({ dest: "uploads/" }); // Temporary storage
 
 const wobbedrobeController = {};
 
-// we can remove parsing user_id since it comes back as a number in req.body
 // need to fix cloudify API - getting an error 
 
 wobbedrobeController.getAllItems = (req, res, next) => {
@@ -36,25 +35,6 @@ wobbedrobeController.addItem = async (req, res, next) => {
   const { user_id, category, color, style, material } = req.body;
   console.log("this is user_id", user_id);
 
-    let parsedUser_id = parseInt(user_id, 10);
-    if (isNaN(parsedUser_id)) {
-      console.log("Invalid user_id:", user_id);
-      return res.status(400).json({ error: "Invalid user_id" });
-    }
-     console.log("Parsed user_id:", parsedUser_id);
-  // let parsedUser_id;
-  // if (typeof user_id !== "number") {
-  //   console.log("user_id is not a number", user_id);
-  //   parsedUser_id = parseInt(user_id, 10);
-  //   if (isNaN(parsedUser_id)) {
-  //     console.log("parsedUser_id is not a number");
-  //     return res.status(400).send("Invalid user_id");
-  //   } else {
-  //     parsedUser_id = user_id;
-  //     console.log("this is parsedUser_id", parsedUser_id);
-  //   }
-  // }
-
   let imageUrl = null;
   // check if user submitted a photo to upload
   if (req.file) {
@@ -74,21 +54,24 @@ wobbedrobeController.addItem = async (req, res, next) => {
     }
   }
   // need to set up column in each table for an image url then write additional query text to include url in the database
- const queryText = `INSERT INTO ${itemType} (user_id, category, color, style${
-   itemType === "shoes" ? "" : ", material"
- }) VALUES($1, $2, $3, $4${itemType === "shoes" ? "" : ", $5"}) RETURNING *;`;
- 
-  // const queryText =
-  //   `INSERT INTO ${itemType}` +
-  //   "(user_id, category, color, style" +
-  //   (itemType === "shoes" ? "" : ", material") +
-  //   ") VALUES($1, $2, $3, $4" +
-  //   (itemType === "shoes" ? "" : ", $5") +
-  //   ") RETURNING *;";
+//  const queryText = `INSERT INTO ${itemType} (user_id, category, color, style${
+//    itemType === "shoes" ? "" : ", material"
+//  }, photo_url) VALUES($1, $2, $3, $4${itemType === "shoes" ? "" : ", $5"}, $6) RETURNING *;`;
 
-  // const values = [user_id, category, color, style];
-  const values = [parsedUser_id, category, color, style];
-  if (itemType !== "shoes") values.push(material);
+  // if itemType is anything other than shoes, include the material column and expect 6 parameters
+  // if itemType is shoes, don't include material column and expect five parameters
+  const queryText = `INSERT INTO ${itemType} (user_id, category, color, style${itemType !== "shoes" ? ", material" : ""}, photo_url) VALUES($1, $2, $3, $4${itemType !== "shoes" ? ", $5" : ""}, ${itemType !== "shoes" ? "$6" : "$5"}) RETURNING *;`;
+
+  // const values = [user_id, category, color, style, imageUrl];
+
+  let values;
+  if (itemType !== "shoes") {
+    values = [user_id, category, color, style, material, imageUrl];
+  } else {
+    values = [user_id, category, color, style, imageUrl];
+  }
+
+  // if (itemType !== "shoes") values.push(material);
   db.query(queryText, values)
     .then((data) => (res.locals[itemType] = data.rows[0]))
     .then(() => next())
@@ -189,6 +172,7 @@ wobbedrobeController.getShoesForUser = (req, res, next) => {
 };
 
 wobbedrobeController.deleteItem = (req, res, next) => {
+  console.log('this is wobbedrobeController.deleteItem req.params', req.params);
   const { itemType, id } = req.params;
   const idName =
     (itemType === "shoes" ? "shoes" : itemType.slice(0, itemType.length - 1)) +

@@ -8,9 +8,6 @@ import materials from "../../clothesData/materials.json";
 import styles from "../../clothesData/style.json";
 import { requestWobbedrobeAdd } from "../../utils/fetchRequests/wobbedrobe";
 import { requestGetUser } from "../../utils/fetchRequests/user";
-
-//upload clothes
-import axios from "axios";
 import "../../styles/AddToWobbeDrobe.scss";
 
 export default function AddToWobbeDrobe() {
@@ -72,22 +69,6 @@ export default function AddToWobbeDrobe() {
     // });
 
     try {
-      // Post to your endpoint for adding wobbedrobe item
-      // will have to change this to call the requestWobbedrobeAdd with selection data and image data
-      // const res = await axios.post("/wobbedrobe/add", completeFormData, {
-      //   headers: { "Content-Type": "multipart/form-data" },
-      // });
-
-      // // If you need to update the user data in the redux store
-      // const updatedUser = await requestGetUser(user.user_id);
-      // dispatch(userLogin(updatedUser));
-
-      // // const res = await axios.post("/wobbedrobe/upload", formData, {
-      // //   headers: { "Content-Type": "multipart/form-data" },
-      // // });
-      // // Handle the response, e.g., display the uploaded image URL
-      // console.log(res.data.imageUrl);
-
       // call requestWobbedrobeAdd with selection and completeFormData
       const response = await requestWobbedrobeAdd(selection, completeFormData);
     } catch (error) {
@@ -172,16 +153,6 @@ export default function AddToWobbeDrobe() {
                   Upload Image
                 </button>
               </div>
-              {/* will need image upload input here */}
-              {/* <div>
-                <label>Upload Image</label>
-                <input
-                  type="file"
-                  className="visually-hidden-input"
-                  onChange={(e) => setImage(e.target.files[0])}
-                  ref={fileInputRef}
-                />
-              </div> */}
             </div>
           )}
 
@@ -198,28 +169,6 @@ export default function AddToWobbeDrobe() {
               {/* ... */}
             </div>
           )}
-
-          {/* HIDDEN Image upload input && Hidden Button for Custom Button */}
-          {/* <div>
-            <input
-              type="file"
-              className="visually-hidden-input"
-              onChange={(e) => setImage(e.target.files[0])}
-              ref={fileInputRef}
-            /> */}
-            {/* Custom File Upload Button */}
-            {/* <button
-              type="button"
-              onClick={() =>
-                fileInputRef.current && fileInputRef.current.click()
-              }
-              className="custom-img-button"
-            >
-              Upload Image
-            </button>
-          </div> */}
-          {/* <input type="submit" value="Upload"  /> */}
-          {/* <input type="submit" value="Submit" /> */}
           {selection && <input type="submit" value="Submit" />}
         </form>
       </div>

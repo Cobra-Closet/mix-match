@@ -10,7 +10,7 @@ export default function Home() {
   const shuffledOutfitImages = user.outfit
     .map((outfit) => outfit.image_url)
     .sort(() => 0.5 - Math.random());
-  console.log(shuffledOutfitImages);
+  console.log('this is shuffleOutfitImages', shuffledOutfitImages);
   const dispatch = useDispatch();
   return (
 
