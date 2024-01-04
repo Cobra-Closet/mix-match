@@ -1,22 +1,43 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const multer = require('multer'); // Use multer for handling multipart/form-data
+const upload = multer({ dest: 'uploads/' });
 
-const wobbedrobeController = require('../controllers/wobbedrobeController.js');
-const ootdController = require('../controllers/ootdController.js');
+const wobbedrobeController = require("../controllers/WobbedrobeController.js");
+const ootdController = require("../controllers/ootdController.js");
 
-router.post('/add/:itemType', wobbedrobeController.addItem, (req, res) => {
-  console.log('POST /wobbedrobe/add/:itemType route hit');
+// //upload clothes
+// const multer = require('multer'); // Use multer for handling multipart/form-data
+// const cloudinary = require("../helpers/cloudinaryConfig");
+
+// const upload = multer({ dest: 'uploads/' }); // Temporary storage
+
+//img upload endpoint
+// router.post("/upload", upload.single("image"), async (req, res) => {
+//   try {
+//     const result = await cloudinary.uploader.upload(req.file.path);
+//     res.json({ imageUrl: result.secure_url });
+//   } catch (error) {
+//     res.status(500).send("Error uploading to Cloudinary");
+//   }
+// });
+
+router.post("/add/:itemType", upload.single("image"), wobbedrobeController.addItem, (req, res) => {
+  console.log("POST /wobbedrobe/add/:itemType route hit");
   const itemType = req.params.itemType;
-  const response = {};
-  response[`Added to ${itemType}`] = res.locals[itemType];
+  const response = {
+    itemType: res.locals[itemType],
+    imageUrl: res.locals.imageUrl,
+  };
+  // response[`Added to ${itemType}`] = res.locals[itemType];
   res.status(200).json(response);
 });
 
 router.get(
-  '/getAll/:itemType',
+  "/getAll/:itemType",
   wobbedrobeController.getAllItems,
   (req, res) => {
-    console.log('GET /wobbedrobe/getAll/:itemType route hit');
+    console.log("GET /wobbedrobe/getAll/:itemType route hit");
     const { itemType } = req.params;
     const response = {};
     response[itemType] = res.locals.all;
@@ -25,10 +46,10 @@ router.get(
 );
 
 router.get(
-  '/getById/:itemType/:id',
+  "/getById/:itemType/:id",
   wobbedrobeController.getById,
   (req, res) => {
-    console.log('GET /wobbedrobe/getById/:itemType/:id route hit');
+    console.log("GET /wobbedrobe/getById/:itemType/:id route hit");
     const { itemType } = req.params;
     const response = { itemType, item: res.locals.item };
     res.status(200).json(response);
@@ -36,21 +57,21 @@ router.get(
 );
 
 router.delete(
-  '/delete/:itemType/:id',
+  "/delete/:itemType/:id",
   ootdController.deleteDependentOutfits,
   wobbedrobeController.deleteItem,
   (req, res) => {
-    console.log('DELETE /wobbedrobe/delete/:itemType/:id route hit');
+    console.log("DELETE /wobbedrobe/delete/:itemType/:id route hit");
     console.log(res.locals);
     res.status(200).json(res.locals);
   }
 );
 
 router.post(
-  '/update/:itemType/:id',
+  "/update/:itemType/:id",
   wobbedrobeController.updateItem,
   (req, res) => {
-    console.log('POST /wobbedrobe/update/:itemType/:id route hit');
+    console.log("POST /wobbedrobe/update/:itemType/:id route hit");
     console.log(req.body);
     console.log(req.locals);
     res.status(200).json(res.locals);
