@@ -7,6 +7,9 @@ const upload = multer({ dest: "uploads/" }); // Temporary storage
 
 const wobbedrobeController = {};
 
+// we can remove parsing user_id since it comes back as a number in req.body
+// need to fix cloudify API - getting an error 
+
 wobbedrobeController.getAllItems = (req, res, next) => {
   const itemType = req.params.itemType;
   db.query(`SELECT * FROM ${itemType};`)
@@ -28,6 +31,7 @@ wobbedrobeController.getAllItems = (req, res, next) => {
 
 wobbedrobeController.addItem = async (req, res, next) => {
   console.log("wardrobeController.addItem hit");
+  console.log('this is req.body of addItem', req.body);
   const itemType = req.params.itemType;
   const { user_id, category, color, style, material } = req.body;
   console.log("this is user_id", user_id);
@@ -54,7 +58,7 @@ wobbedrobeController.addItem = async (req, res, next) => {
   let imageUrl = null;
   // check if user submitted a photo to upload
   if (req.file) {
-    console.log("user submitted a photo");
+    console.log("user submitted a photo", req.file);
     try {
       const result = await cloudinary.uploader.upload(req.file.path);
       console.log("this is the result of cloudinary upload", result);

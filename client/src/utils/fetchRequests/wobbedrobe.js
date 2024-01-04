@@ -11,7 +11,7 @@ export function requestWobbedrobeAdd(itemType, formData) {
     //   style,
     //   material,
     // }),
-    body: JSON.stringify({formData})
+    body: formData
   })
     .then((res) => res.json())
     .catch((err) => console.log("App: add to wobbedrobe: ERROR", err));
