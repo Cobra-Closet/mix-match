@@ -8,7 +8,7 @@ const upload = multer({ dest: "uploads/" }); // Temporary storage
 const wobbedrobeController = {};
 
 // we can remove parsing user_id since it comes back as a number in req.body
-// need to fix cloudify API - getting an error 
+// need to fix cloudify API - getting an error
 
 wobbedrobeController.getAllItems = (req, res, next) => {
   const itemType = req.params.itemType;
@@ -31,17 +31,17 @@ wobbedrobeController.getAllItems = (req, res, next) => {
 
 wobbedrobeController.addItem = async (req, res, next) => {
   console.log("wardrobeController.addItem hit");
-  console.log('this is req.body of addItem', req.body);
+  console.log("this is req.body of addItem", req.body);
   const itemType = req.params.itemType;
   const { user_id, category, color, style, material } = req.body;
   console.log("this is user_id", user_id);
 
-    let parsedUser_id = parseInt(user_id, 10);
-    if (isNaN(parsedUser_id)) {
-      console.log("Invalid user_id:", user_id);
-      return res.status(400).json({ error: "Invalid user_id" });
-    }
-     console.log("Parsed user_id:", parsedUser_id);
+  let parsedUser_id = parseInt(user_id, 10);
+  if (isNaN(parsedUser_id)) {
+    console.log("Invalid user_id:", user_id);
+    return res.status(400).json({ error: "Invalid user_id" });
+  }
+  console.log("Parsed user_id:", parsedUser_id);
   // let parsedUser_id;
   // if (typeof user_id !== "number") {
   //   console.log("user_id is not a number", user_id);
@@ -63,9 +63,9 @@ wobbedrobeController.addItem = async (req, res, next) => {
       const result = await cloudinary.uploader.upload(req.file.path);
       console.log("this is the result of cloudinary upload", result);
       // result.secure_url is the URL of the uploaded image returned by Cloudinary
-      imageUrl = result.secure_url;
+      imageUrl = result.url;
       res.locals.imageUrl = imageUrl;
-      console.log("added to res.locals.imageUrl", res.locals.imageUrl);
+      console.log("added to res.locals.imageUrl", res.locals.secure_imageUrl);
     } catch (err) {
       return next({
         log: `Error uploading image in wobbedrobeController.addItem. ERROR: ${err}`,
@@ -74,10 +74,10 @@ wobbedrobeController.addItem = async (req, res, next) => {
     }
   }
   // need to set up column in each table for an image url then write additional query text to include url in the database
- const queryText = `INSERT INTO ${itemType} (user_id, category, color, style${
-   itemType === "shoes" ? "" : ", material"
- }) VALUES($1, $2, $3, $4${itemType === "shoes" ? "" : ", $5"}) RETURNING *;`;
- 
+  const queryText = `INSERT INTO ${itemType} (user_id, category, color, style${
+    itemType === "shoes" ? "" : ", material"
+  }) VALUES($1, $2, $3, $4${itemType === "shoes" ? "" : ", $5"}) RETURNING *;`;
+
   // const queryText =
   //   `INSERT INTO ${itemType}` +
   //   "(user_id, category, color, style" +
