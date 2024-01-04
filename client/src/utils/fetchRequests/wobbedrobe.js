@@ -1,13 +1,20 @@
-export function requestWobbedrobeAdd(itemType, body) {
+export function requestWobbedrobeAdd(itemType, formData) {
   return fetch(`wobbedrobe/add/${itemType}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
+    method: "POST",
+    // headers: {
+    //   "Content-Type": "application/json",
+    // },
+    // body: JSON.stringify({
+    //   user_id,
+    //   category,
+    //   color,
+    //   style,
+    //   material,
+    // }),
+    body: formData
   })
     .then((res) => res.json())
-    .catch((err) => console.log('App: add to wobbedrobe: ERROR', err));
+    .catch((err) => console.log("App: add to wobbedrobe: ERROR", err));
 }
 
 export function requestWobbedrobeGet(itemType) {

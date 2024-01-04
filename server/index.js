@@ -1,17 +1,21 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const Controller = require('./controllers/wobbedrobeController.js');
+const Controller = require('./controllers/WobbedrobeController.js');
 const userController = require('./controllers/userController.js');
 const cookieController = require('./controllers/cookieController.js');
 const sessionController = require('./controllers/sessionController.js');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const db = require('./models/db.js');
+const sessionCleanupController = require('./controllers/sessionCleanupController.js');
+const multer = require('multer'); // Use multer for handling multipart/form-data
 
 require('dotenv').config();
 
 const app = express();
 const PORT = 8080;
+// const PORT = 3000;
 
 const userRouter = require('./routes/userRouter.js');
 const ootdRouter = require('./routes/ootdRouter.js');
@@ -27,6 +31,7 @@ app.use('/downloadedImages', express.static('downloadedImages'));
 app.use('/user', userRouter);
 app.use('/wobbedrobe', wobbedrobeItemsRouter);
 app.use('/ootd', ootdRouter);
+
 
 app.get('*', (req, res) => {
   console.log('GET * route hit');
@@ -49,6 +54,9 @@ app.use((err, req, res, next) => {
   console.log(errorObj.log);
   return res.status(errorObj.status).json({ err: errorObj.message });
 });
+
+// session cleanup that runs periodically
+sessionCleanupController.startCleanup();
 
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
 
