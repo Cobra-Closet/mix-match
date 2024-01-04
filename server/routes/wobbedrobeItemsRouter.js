@@ -3,14 +3,18 @@ const router = express.Router();
 const multer = require('multer'); // Use multer for handling multipart/form-data
 const upload = multer({ dest: 'uploads/' });
 
-const wobbedrobeController = require('../controllers/WobbedrobeController.js');
-const ootdController = require('../controllers/ootdController.js');
+const wobbedrobeController = require("../controllers/WobbedrobeController.js");
+const ootdController = require("../controllers/ootdController.js");
 
-router.post('/add/:itemType', upload.single("image"), wobbedrobeController.addItem, (req, res) => {
-  console.log('POST /wobbedrobe/add/:itemType route hit');
+router.post("/add/:itemType", upload.single("image"), wobbedrobeController.addItem, (req, res) => {
+  console.log("POST /wobbedrobe/add/:itemType route hit");
   const itemType = req.params.itemType;
-  const response = {};
-  response[`Added to ${itemType}`] = res.locals[itemType];
+  // will need to adjust this. we have imageUrl to make sure cloudify works
+  const response = {
+    itemType: res.locals[itemType],
+    imageUrl: res.locals.imageUrl,
+  };
+  // response[`Added to ${itemType}`] = res.locals[itemType];
   res.status(200).json(response);
 });
 
