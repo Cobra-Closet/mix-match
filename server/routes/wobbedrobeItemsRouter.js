@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer'); // Use multer for handling multipart/form-data
+const upload = multer({ dest: 'uploads/' });
 
 const wobbedrobeController = require('../controllers/WobbedrobeController.js');
 const ootdController = require('../controllers/ootdController.js');
 
-router.post('/add/:itemType', wobbedrobeController.addItem, (req, res) => {
+router.post('/add/:itemType', upload.single("image"), wobbedrobeController.addItem, (req, res) => {
   console.log('POST /wobbedrobe/add/:itemType route hit');
   const itemType = req.params.itemType;
   const response = {};
