@@ -6,6 +6,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     display: flex;
+    flex-wrap: wrap;
     // background-color: black;
     justify-content: center;
   }
