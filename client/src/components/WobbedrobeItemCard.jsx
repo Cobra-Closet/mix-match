@@ -91,12 +91,7 @@ export default function WobbedrobeItemCard({ itemType, item }) {
         ) : (
           // card front
           <div className="card-front">
-            <img
-              src={hasImg}
-              // maxWidth={250}
-              // maxHeight={250}
-              alt={`${item.category} image`}
-            />
+            <img src={hasImg} alt={`${item.category} image`} />
           </div>
         )
       ) : (
@@ -126,34 +121,6 @@ export default function WobbedrobeItemCard({ itemType, item }) {
         </div>
       )}
     </div>
-    // <div className='item-card' onClick={hasImg ? flipCard : setIsFlipped}>
-    //   <div className='card-front'>
-    //     <img src={item.imgUrl} />
-    //   </div>
-    //   {/* this is going to be the back of thee card. */}
-    //   <div className='header'>
-    //     <h3>{category[0].toUpperCase() + category.slice(1)}</h3>
-    //     <button
-    //       className='delete'
-    //       onClick={async () => {
-    //         if (process.env.NODE_ENV === 'production') {
-    //           await requestWobbedrobeDelete(
-    //             itemType + (itemType === 'shoes' ? '' : 's'),
-    //             item[`${itemType}_id`]
-    //           );
-    //           const updatedUser = await requestGetUser(userId);
-    //           dispatch(userLogin(updatedUser));
-    //         }
-    //       }}
-    //     >
-    //       DELETE
-    //     </button>
-    //   </div>
-
-      // <ColorRow {...colorProps} />
-      // <StyleRow {...styleProps} />
-      // {itemType !== 'shoes' && <MaterialRow {...materialProps} />}
-    // </div>
   );
 }
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { goToPage } from '../../utils/reducers/statusSlice';
 import Navbar from '../Navbar';
 import '../../styles/LandingPage.scss'
-import wobbedrobe from '../../images/wobbedrobe-landing.svg';
+import cobrasnake from '../../images/cobra_snake_landing.svg';
 import photo1 from '../../images/mukukoh-landingpage.jpg';
 import photo2 from '../../images/thom-landingpage.jpg';
 import photo3 from '../../images/serafima-landingpage.jpg'
@@ -17,7 +17,7 @@ export default function LandingPage() {
     return (
       <div className="landingpage">
         <div className="landingpage-logo">
-          <img src={ wobbedrobe } className="wobbedrobe-logo" alt="Wobbedrobe-Logo" />
+          <img src={ cobrasnake } className="cobrasnake-logo" alt="Cobra-Snake-Logo" />
         </div>
         <div className="landingpage-photos">
           <img src={ photo1 } className="photo1" alt="Wobbedrobe Photo" />
