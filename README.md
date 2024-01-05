@@ -1,5 +1,5 @@
-# Mix Match
-The Mix Match Closet App is a full-stack application designed to streamline wardrobe management and outfit selection for users. This application leverages an Express server on the backend and React on the frontend.
+# Cobra Closet
+The Cobra Closet App is a full-stack application designed to streamline wardrobe management and outfit selection for users. This application leverages an Express server on the backend and React on the frontend.
 
 ## Features
 - User Wardrobe Management: Allows users to save and organize items in their wardrobe.
