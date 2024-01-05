@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const multer = require('multer'); // Use multer for handling multipart/form-data
 const upload = multer({ dest: 'uploads/' });
@@ -19,10 +19,10 @@ router.post("/add/:itemType", upload.single("image"), wobbedrobeController.addIt
 });
 
 router.get(
-  "/getAll/:itemType",
+  '/getAll/:itemType',
   wobbedrobeController.getAllItems,
   (req, res) => {
-    console.log("GET /wobbedrobe/getAll/:itemType route hit");
+    console.log('GET /wobbedrobe/getAll/:itemType route hit');
     const { itemType } = req.params;
     const response = {};
     response[itemType] = res.locals.all;
@@ -31,10 +31,10 @@ router.get(
 );
 
 router.get(
-  "/getById/:itemType/:id",
+  '/getById/:itemType/:id',
   wobbedrobeController.getById,
   (req, res) => {
-    console.log("GET /wobbedrobe/getById/:itemType/:id route hit");
+    console.log('GET /wobbedrobe/getById/:itemType/:id route hit');
     const { itemType } = req.params;
     const response = { itemType, item: res.locals.item };
     res.status(200).json(response);
@@ -42,21 +42,21 @@ router.get(
 );
 
 router.delete(
-  "/delete/:itemType/:id",
+  '/delete/:itemType/:id',
   ootdController.deleteDependentOutfits,
   wobbedrobeController.deleteItem,
   (req, res) => {
-    console.log("DELETE /wobbedrobe/delete/:itemType/:id route hit");
+    console.log('DELETE /wobbedrobe/delete/:itemType/:id route hit');
     console.log(res.locals);
     res.status(200).json(res.locals);
   }
 );
 
 router.post(
-  "/update/:itemType/:id",
+  '/update/:itemType/:id',
   wobbedrobeController.updateItem,
   (req, res) => {
-    console.log("POST /wobbedrobe/update/:itemType/:id route hit");
+    console.log('POST /wobbedrobe/update/:itemType/:id route hit');
     console.log(req.body);
     console.log(req.locals);
     res.status(200).json(res.locals);

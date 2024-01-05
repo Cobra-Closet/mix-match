@@ -3,10 +3,13 @@ import { useSelector } from 'react-redux';
 import WobbedrobeItemCard from '../WobbedrobeItemCard';
 import { element } from 'prop-types';
 
+
+// useSelector obtains the user object from state which contains the user's information + their wardrobe as we see on the console log when we sign in
 export default function UserWobbeDrobe() {
   const user = useSelector((state) => state.status.user);
   console.log(user.wardrobe);
   const page = useSelector((state) => state.status.page);
+  // tracks which category of items the user wants to view. state will change with what the user selects
   const [selection, setSelection] = useState('all');
   if (page === 'VIEW_WOBBEDROBE')
     return (
@@ -18,6 +21,7 @@ export default function UserWobbeDrobe() {
           <button onClick={() => setSelection('shoes')}>Shoes</button>
           <button onClick={() => setSelection('all')}>All</button>
         </div>
+        {/* if selection is not all, this component will filter through the wardrobe array to show only the items in that category */}
         {selection !== 'all' && (
           <div className='card-container'>
             {[...user.wardrobe[selection]]
@@ -33,6 +37,7 @@ export default function UserWobbeDrobe() {
               ))}
           </div>
         )}
+        {/* if selection is all, it will render all items in wardrobe */}
         {selection === 'all' && (
           <div className='card-container'>
             {[

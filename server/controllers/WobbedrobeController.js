@@ -30,7 +30,7 @@ wobbedrobeController.getAllItems = (req, res, next) => {
 
 wobbedrobeController.addItem = async (req, res, next) => {
   console.log("wardrobeController.addItem hit");
-  console.log('this is req.body of addItem', req.body);
+  console.log("this is req.body of addItem", req.body);
   const itemType = req.params.itemType;
   const { user_id, category, color, style, material } = req.body;
   console.log("this is user_id", user_id);
@@ -43,9 +43,9 @@ wobbedrobeController.addItem = async (req, res, next) => {
       const result = await cloudinary.uploader.upload(req.file.path);
       console.log("this is the result of cloudinary upload", result);
       // result.secure_url is the URL of the uploaded image returned by Cloudinary
-      imageUrl = result.secure_url;
+      imageUrl = result.url;
       res.locals.imageUrl = imageUrl;
-      console.log("added to res.locals.imageUrl", res.locals.imageUrl);
+      console.log("added to res.locals.imageUrl", res.locals.secure_imageUrl);
     } catch (err) {
       return next({
         log: `Error uploading image in wobbedrobeController.addItem. ERROR: ${err}`,

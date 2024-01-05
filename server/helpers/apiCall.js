@@ -1,4 +1,4 @@
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.OPENAI_API_KEY;
 const imageEndpoint = "https://api.openai.com/v1/images/generations";
 const textEndpoint = "https://api.openai.com/v1/chat/completions";
 
