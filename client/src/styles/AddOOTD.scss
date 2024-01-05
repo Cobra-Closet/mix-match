@@ -26,6 +26,8 @@
 
     .cards-container {
       display: flex;
+      flex-wrap: wrap;
+      
 
       .chosen {
         background-color: rgb(201, 156, 156);
